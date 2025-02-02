@@ -3,8 +3,10 @@ package dam.alumno.filmoteca;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -43,7 +45,10 @@ public class PeliculaView {
             fieldGenero.setText(generosString);
 
             // Año
-            fieldAño.setText(String.valueOf(pelicula.getYear()));
+            // Asegurarse que el campo "Año" solo permita dígitos
+            fieldAño.setTextFormatter(new TextFormatter<String>(change ->
+                    change.getControlNewText().matches("\\d*") ? change : null
+            ));
 
             // Director
             fieldDirector.setText(pelicula.getDirector());
@@ -96,7 +101,13 @@ public class PeliculaView {
             int año = Integer.parseInt(fieldAño.getText());
             pelicula.setYear(año);
         } catch (NumberFormatException e) {
-            System.out.println("Error: Año inválido.");
+            // Mostrar una alerta si el año no es valido
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error en Año");
+            alerta.setHeaderText("Formato de Año inválido");
+            alerta.setContentText("Por favor, ingresa un número válido para el año.");
+            alerta.showAndWait();
+            return;
         }
 
         // Director
