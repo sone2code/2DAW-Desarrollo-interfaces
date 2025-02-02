@@ -1,0 +1,112 @@
+/* General Styles */
+.root {
+    -fx-background-color: #2b2b2b;
+}
+
+* {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-base: #333333;
+}
+
+/* ButtonBar */
+.button-bar {
+    -fx-background-color: #1c1c1c;
+    -fx-padding: 10;
+}
+
+.button-bar .button {
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 15px;
+}
+
+.button-bar .button:hover {
+    -fx-background-color: #666666;
+}
+
+/* TableView */
+.table-view {
+    -fx-background-color: #121212;
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 14px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .table-cell {
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+}
+
+/* Table Columns */
+.table-view .table-column {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-column-header {
+    -fx-background-color: #444444;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+/* VBox */
+.vbox {
+    -fx-background-color: transparent;
+}
+
+/* Button */
+.button {
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 2px;
+}
+
+.button:hover {
+    -fx-background-color: #666666;
+}
+
+/* Header Label */
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bolder;
+    -fx-alignment: center;
+}
+
+/* ImageView */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+/* HBox */
+.hbox {
+    -fx-background-color: transparent;
+}
+
+/* Text */
+.text {
+    -fx-fill: #ffffff;
+    -fx-font-size: 12px;
+
+}
+
+/* Anchors and Spacing */
+.anchor-pane {
+    -fx-background-color: #2b2b2b;
+}
+
+.padding {
+    -fx-padding: 10;
+}
+
+#textoId, #textoTitulo, #textoGenero, #textoAño, #textoDirector, #textoRating, #textoDescripcion {
+    -fx-fill: white;
+}
