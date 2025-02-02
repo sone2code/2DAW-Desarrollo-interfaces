@@ -24,72 +24,15 @@ public class PeliculaView {
     private Boolean onClick = false;
     private DatosFilmoteca datosFilmoteca = DatosFilmoteca.getInstancia();
     private ObservableList<Pelicula> listaPeliculas = DatosFilmoteca.getListaPeliculas();
+    private Pelicula peliculaEditando = null; // Variable para almacenar la película en edición
 
     public void setTextoTitulo(String texto) {
         textoTitulo.setText(texto);
     }
 
-
-    public void handlerAceptar(ActionEvent actionEvent) {
-        Pelicula pelicula = new Pelicula();
-
-        // ID
-        int maxId = 0;
-        for (Pelicula p : listaPeliculas) {
-            if (p.getId() > maxId) {
-                maxId = p.getId();
-            }
-        }
-        pelicula.setId(maxId + 1);
-        // Titulo
-        pelicula.setTitle(fieldTitulo.getText());
-
-        // Genero: Convertir el texto en una lista de géneros
-        String[] generosArray = fieldGenero.getText().split(","); // Separar por comas
-        List<String> generosList = Arrays.asList(generosArray);
-        pelicula.setGenero(generosList);
-
-        // Año: Convertir el texto a int
-        try {
-            int año = Integer.parseInt(fieldAño.getText()); // Parsear a int
-            pelicula.setYear(año);
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Año inválido.");
-        }
-
-        // Director
-        pelicula.setDirector(fieldDirector.getText());
-
-        // Rating: Convertir el texto a float
-        try {
-            float rating = (float) sliderRating.getValue(); // Obtener valor del slider
-            pelicula.setRating(rating);
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Rating inválido.");
-        }
-
-        // Descripción
-        pelicula.setDescription(fieldDescripcion.getText());
-
-
-
-        // Añadir la película a la lista
-        listaPeliculas.add(pelicula);
-
-        // Cerrar la ventana
-        Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
-        stage.close();
-    }
-
-
-    public void handlerCancelar(ActionEvent actionEvent) {
-        Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
-        stage.close();
-    }
-
-
     public void setPelicula(Pelicula pelicula) {
         if (pelicula != null) {
+            peliculaEditando = pelicula; // Guardamos la película que se está editando
             textoTitulo.setText("Editar Pelicula");
 
             // Titulo
@@ -118,8 +61,70 @@ public class PeliculaView {
             fieldDescripcion.setText(pelicula.getDescription());
         } else {
             textoTitulo.setText("Nueva Pelicula");
+            peliculaEditando = null; // Si no se pasa película, es para crear una nueva
         }
     }
 
-}
+    public void handlerAceptar(ActionEvent actionEvent) {
+        Pelicula pelicula;
 
+        // Si estamos editando, buscamos la película y la modificamos
+        if (peliculaEditando != null) {
+            pelicula = peliculaEditando; // Usamos la película que estamos editando
+        } else {
+            pelicula = new Pelicula(); // Si no es edición, creamos una nueva
+            // ID
+            int maxId = 0;
+            for (Pelicula p : listaPeliculas) {
+                if (p.getId() > maxId) {
+                    maxId = p.getId();
+                }
+            }
+            pelicula.setId(maxId + 1);
+        }
+
+        // Actualizamos los valores
+        pelicula.setTitle(fieldTitulo.getText());
+
+        // Genero: Convertir el texto en una lista de géneros
+        String[] generosArray = fieldGenero.getText().split(",");
+        List<String> generosList = Arrays.asList(generosArray);
+        pelicula.setGenero(generosList);
+
+        // Año: Convertir el texto a int
+        try {
+            int año = Integer.parseInt(fieldAño.getText());
+            pelicula.setYear(año);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Año inválido.");
+        }
+
+        // Director
+        pelicula.setDirector(fieldDirector.getText());
+
+        // Rating: Convertir el texto a float
+        try {
+            float rating = (float) sliderRating.getValue();
+            pelicula.setRating(rating);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Rating inválido.");
+        }
+
+        // Descripción
+        pelicula.setDescription(fieldDescripcion.getText());
+
+        // Si estamos en modo edición, no agregamos una nueva película, solo actualizamos
+        if (peliculaEditando == null) {
+            listaPeliculas.add(pelicula); // Si es nueva, la añadimos a la lista
+        }
+
+        // Cerrar la ventana
+        Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
+        stage.close();
+    }
+
+    public void handlerCancelar(ActionEvent actionEvent) {
+        Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
+        stage.close();
+    }
+}

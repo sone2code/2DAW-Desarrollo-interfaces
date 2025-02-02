@@ -106,14 +106,12 @@ public class MainController {
         stage.setTitle("Nueva pelicula");
         stage.setScene(escena);
         PeliculaView controlador = fxmlLoader.getController();
-        controlador.setPelicula(tablaPeliculas.getSelectionModel().getSelectedItem());
+        controlador.setPelicula(null);
         controlador.setTextoTitulo("Añadir nueva pelicula");
         stage.showAndWait();
     }
 
     public void handlerModificar(ActionEvent actionEvent) {
-        Scene escena = null;
-
         int indice = tablaPeliculas.getSelectionModel().getSelectedIndex();
 
         if (indice < 0) {
@@ -126,19 +124,23 @@ public class MainController {
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PeliculaView.fxml"));
+        Scene escena = null;
         try {
             escena = new Scene(fxmlLoader.load());
-        } catch (IOException e){
-            System.out.println("Error al intentar editar un nuevo pelicula");
+        } catch (IOException e) {
+            System.out.println("Error al intentar editar una película");
             e.printStackTrace();
         }
 
         Stage stage = new Stage();
         stage.setTitle("Modificar Pelicula");
         stage.setScene(escena);
+
+        // Obtener el controlador y pasar la película seleccionada
         PeliculaView controlador = fxmlLoader.getController();
         controlador.setPelicula(tablaPeliculas.getSelectionModel().getSelectedItem());
-        controlador.setTextoTitulo("Editar pelicula");
+        controlador.setTextoTitulo("Editar película");
+
         stage.showAndWait();
     }
 
